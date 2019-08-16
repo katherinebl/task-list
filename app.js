@@ -1,4 +1,4 @@
-// DEFINE UI VARS
+// Define UI Vars
 
 const taskInput = document.querySelector('#task');
 const form = document.querySelector('#task-form');
@@ -15,9 +15,11 @@ function loadAllEventListeners() {
   form.addEventListener('submit', addTask);
   //Remove task event
   taskList.addEventListener('click', removeTask);
+  //Clear task event
+  clearBtn.addEventListener('click', clearTasks);
 }
 
-//Add Task function
+//ADD TASK function
 function addTask(e) {
   //Check if there's a value in the input
   if (taskInput.value === '') {
@@ -49,8 +51,7 @@ function addTask(e) {
   e.preventDefault();
 }
 
-//Remove Task function
-
+//REMOVE TASK function
 function removeTask(e) {
   if (e.target.parentElement.classList.contains('delete-item')) {
     if (confirm('Are you sure?')) {
@@ -61,3 +62,13 @@ function removeTask(e) {
 
 }
 
+//CLEAR ALL TASKS function
+function clearTasks() {
+  // taskList.innerHTML = "";
+
+  //Faster
+  while (taskList.firstChild) {
+    taskList.removeChild(taskList.firstChild);
+  }
+
+}
