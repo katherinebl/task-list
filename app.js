@@ -2,7 +2,7 @@
 
 const taskInput = document.querySelector('#task');
 const form = document.querySelector('#task-form');
-const taskList = document.querySelector('.colletion');
+const taskList = document.querySelector('.collection');
 const filter = document.querySelector('#filter');
 const clearBtn = document.querySelector('.clear-tasks');
 
@@ -17,6 +17,8 @@ function loadAllEventListeners() {
   taskList.addEventListener('click', removeTask);
   //Clear task event
   clearBtn.addEventListener('click', clearTasks);
+  //Filter task event
+  filter.addEventListener('keyup', filterTasks);
 }
 
 //ADD TASK function
@@ -29,7 +31,7 @@ function addTask(e) {
   //Create item
   const li = document.createElement('li');
   //Asign class to item
-  li.className = 'colletion-item';
+  li.className = 'collection-item';
   //Create text node with task content and append to item
   li.appendChild(document.createTextNode(taskInput.value));
 
@@ -57,9 +59,7 @@ function removeTask(e) {
     if (confirm('Are you sure?')) {
       e.target.parentElement.parentElement.remove();
     }
-
   }
-
 }
 
 //CLEAR ALL TASKS function
@@ -67,8 +67,25 @@ function clearTasks() {
   // taskList.innerHTML = "";
 
   //Faster
-  while (taskList.firstChild) {
-    taskList.removeChild(taskList.firstChild);
+  if (confirm('Are you really sure?')) {
+    while (taskList.firstChild) {
+      taskList.removeChild(taskList.firstChild);
+    }
   }
 
+}
+
+//FILTER TASKS function
+function filterTasks(e) {
+  const input = e.target.value.toLowerCase();
+
+  document.querySelectorAll('.collection-item').forEach(
+    function (task) {
+      const item = task.firstChild.textContent;
+      if (item.toLowerCase().indexOf(input) != -1) {
+        task.style.display = 'block';
+      } else {
+        task.style.display = 'none';
+      }
+    });
 }
