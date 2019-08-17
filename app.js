@@ -6,7 +6,7 @@ const taskList = document.querySelector('.collection');
 const filter = document.querySelector('#filter');
 const clearBtn = document.querySelector('.clear-tasks');
 
-// CALL TO LOAD ALL EVENT LISTENERS
+// Call to load all event listeners
 loadAllEventListeners();
 
 //Load all event listeners
@@ -44,13 +44,30 @@ function addTask(e) {
   //Append link to item
   li.appendChild(link);
 
-  //Appens item to the list
+  //Append item to the list
   taskList.appendChild(li);
+
+  //Store in LS
+  storeTaskInLocalStorage(taskInput.value);
 
   //Clear input
   taskInput.value = "";
 
   e.preventDefault();
+}
+
+//STORE IN LS function
+function storeTaskInLocalStorage(task) {
+  let tasks;
+  if (localStorage.getItem('tasks') === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  tasks.push(task);
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 //REMOVE TASK function
